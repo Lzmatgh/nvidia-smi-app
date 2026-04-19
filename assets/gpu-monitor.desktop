@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GPU Monitor
+Comment=Open a live GPU monitor powered by nvidia-smi
+Exec=/usr/bin/gpu-monitor-launcher
+Icon=gpu-monitor
+Terminal=false
+Categories=System;
+Keywords=GPU;NVIDIA;nvidia-smi;monitor;
+StartupNotify=true

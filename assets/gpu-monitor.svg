@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="GPU Monitor icon">
+  <rect x="8" y="16" width="112" height="80" rx="10" fill="#1b1f23"/>
+  <rect x="18" y="26" width="92" height="60" rx="6" fill="#76b900"/>
+  <rect x="32" y="40" width="64" height="8" rx="4" fill="#1b1f23"/>
+  <rect x="32" y="56" width="52" height="8" rx="4" fill="#1b1f23"/>
+  <rect x="32" y="72" width="40" height="8" rx="4" fill="#1b1f23"/>
+  <rect x="44" y="100" width="40" height="8" rx="4" fill="#1b1f23"/>
+  <rect x="20" y="48" width="6" height="10" rx="2" fill="#1b1f23"/>
+  <rect x="112" y="48" width="6" height="10" rx="2" fill="#1b1f23"/>
+</svg>

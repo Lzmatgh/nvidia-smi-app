@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v watch >/dev/null 2>&1; then
+  echo "gpu-monitor: 'watch' was not found. Please install the 'procps' package." >&2
+  exit 1
+fi
+
+if ! command -v nvidia-smi >/dev/null 2>&1; then
+  echo "gpu-monitor: 'nvidia-smi' was not found. Please make sure the NVIDIA driver is installed." >&2
+  exit 1
+fi
+
+exec watch -w -n 1 nvidia-smi

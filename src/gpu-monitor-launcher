@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+APP_CMD="/usr/bin/gpu-monitor"
+WINDOW_TITLE="${GPU_MONITOR_WINDOW_TITLE:-GPU Monitor}"
+TERMINAL_GEOMETRY="${GPU_MONITOR_TERMINAL_GEOMETRY:-92x30}"
+if [[ ! -x "${APP_CMD}" ]]; then
+  LOCAL_CMD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/gpu-monitor"
+  if [[ -x "${LOCAL_CMD}" ]]; then
+    APP_CMD="${LOCAL_CMD}"
+  fi
+fi
+
+run_directly() {
+  exec "${APP_CMD}"
+}
+
+launch_in_terminal() {
+  if command -v gnome-terminal >/dev/null 2>&1; then
+    exec gnome-terminal --title="${WINDOW_TITLE}" --geometry="${TERMINAL_GEOMETRY}" -- bash -lc "exec \"${APP_CMD}\""
+  fi
+
+  if command -v x-terminal-emulator >/dev/null 2>&1; then
+    exec x-terminal-emulator -T "${WINDOW_TITLE}" -geometry "${TERMINAL_GEOMETRY}" -e "${APP_CMD}"
+  fi
+
+  if command -v kgx >/dev/null 2>&1; then
+    exec kgx --title "${WINDOW_TITLE}" "${APP_CMD}"
+  fi
+
+  if command -v konsole >/dev/null 2>&1; then
+    exec konsole --hold -p "tabtitle=${WINDOW_TITLE}" --geometry "${TERMINAL_GEOMETRY}" -e "${APP_CMD}"
+  fi
+
+  if command -v xfce4-terminal >/dev/null 2>&1; then
+    exec xfce4-terminal --title="${WINDOW_TITLE}" --geometry="${TERMINAL_GEOMETRY}" --command="${APP_CMD}"
+  fi
+
+  if command -v mate-terminal >/dev/null 2>&1; then
+    exec mate-terminal --title="${WINDOW_TITLE}" --geometry="${TERMINAL_GEOMETRY}" -- bash -lc "exec \"${APP_CMD}\""
+  fi
+
+  if command -v lxterminal >/dev/null 2>&1; then
+    exec lxterminal -t "${WINDOW_TITLE}" --geometry="${TERMINAL_GEOMETRY}" -e "${APP_CMD}"
+  fi
+
+  if command -v xterm >/dev/null 2>&1; then
+    exec xterm -T "${WINDOW_TITLE}" -geometry "${TERMINAL_GEOMETRY}" -e "${APP_CMD}"
+  fi
+
+  echo "gpu-monitor-launcher: no supported terminal emulator was found." >&2
+  echo "Please install one of: xterm, gnome-terminal, kgx, konsole, xfce4-terminal, mate-terminal, lxterminal." >&2
+  exit 1
+}
+
+if [[ -n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}" ]]; then
+  launch_in_terminal
+fi
+
+run_directly
